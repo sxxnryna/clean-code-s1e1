@@ -31,6 +31,16 @@ const createTaskItem = (taskText) => {
   return listItem;
 };
 
+//add a new task
+const addNewTask = () => {
+  console.log("Adding a new task...");
+  if (!newTaskInput.value) return;
+  const listItem = createTaskItem(newTaskInput.value);
+  todoListContainer.appendChild(listItem);
+  bindTaskItemEvents(listItem, markTaskAsCompleted);
+  newTaskInput.value = "";
+};
+
 //Edit an existing task.
 
 var editTask = function () {
