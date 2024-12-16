@@ -3,58 +3,32 @@ const addTaskButton = document.getElementsByTagName("button")[0];
 const todoListContainer = document.getElementById("incompleteTasks");
 const completedListContainer = document.getElementById("completed-tasks");
 
-//New task list item
-var createNewTaskElement = function (taskString) {
-  var listItem = document.createElement("li");
-
-  //input (checkbox)
-  var checkBox = document.createElement("input"); //checkbx
-  //label
-  var label = document.createElement("label"); //label
-  //input (text)
-  var editInput = document.createElement("input"); //text
-  //button.edit
-  var editButton = document.createElement("button"); //edit button
-
-  //button.delete
-  var deleteButton = document.createElement("button"); //delete button
-  var deleteButtonImg = document.createElement("img"); //delete button image
-
-  label.innerText = taskString;
-  label.className = "task";
-
-  //Each elements, needs appending
+//new task list item
+const createTaskItem = (taskText) => {
+  const listItem = document.createElement("li");
+  const checkBox = document.createElement("input");
+  const taskLabel = document.createElement("label");
+  const editField = document.createElement("input");
+  const editBtn = document.createElement("button");
+  const deleteBtn = document.createElement("button");
+  const deleteImg = document.createElement("img");
+  taskLabel.innerText = taskText;
+  taskLabel.className = "task";
   checkBox.type = "checkbox";
-  editInput.type = "text";
-  editInput.className = "task";
-
-  editButton.innerText = "Edit"; //innerText encodes special characters, HTML does not.
-  editButton.className = "edit";
-
-  deleteButton.className = "delete";
-  deleteButtonImg.src = "./remove.svg";
-  deleteButton.appendChild(deleteButtonImg);
-
-  //and appending.
+  editField.type = "text";
+  editField.className = "task";
+  editBtn.innerText = "Edit";
+  editBtn.className = "edit";
+  deleteBtn.className = "delete";
+  deleteImg.src = "./remove.svg";
+  deleteBtn.appendChild(deleteImg);
   listItem.appendChild(checkBox);
-  listItem.appendChild(label);
-  listItem.appendChild(editInput);
-  listItem.appendChild(editButton);
-  listItem.appendChild(deleteButton);
+  listItem.appendChild(taskLabel);
+  listItem.appendChild(editField);
+  listItem.appendChild(editBtn);
+  listItem.appendChild(deleteBtn);
+
   return listItem;
-};
-
-var addTask = function () {
-  console.log("Add Task...");
-  //Create a new list item with the text from the #new-task:
-  if (!taskInput.value) return;
-  var listItem = createNewTaskElement(taskInput.value);
-
-  //Append listItem to incompleteTaskHolder
-  incompleteTaskHolder.appendChild(listItem);
-  bindTaskEvents(listItem, taskCompleted);
-
-  taskInput.value = "";
 };
 
 //Edit an existing task.
