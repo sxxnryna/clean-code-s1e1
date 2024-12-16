@@ -88,43 +88,25 @@ const ajaxRequest = () => {
   console.log("AJAX request initiated");
 };
 
-//The glue to hold it all together.
+//setting up event listeners
+addTaskButton.onclick = addNewTask;
+addTaskButton.addEventListener("click", addNewTask);
+addTaskButton.addEventListener("click", ajaxRequest);
 
-//Set the click handler to the addTask function.
-addButton.onclick = addTask;
-addButton.addEventListener("click", addTask);
-addButton.addEventListener("click", ajaxRequest);
-
-var bindTaskEvents = function (taskListItem, checkBoxEventHandler) {
-  console.log("bind list item events");
-  //select ListItems children
-  var checkBox = taskListItem.querySelector("input[type=checkbox]");
-  var editButton = taskListItem.querySelector("button.edit");
-  var deleteButton = taskListItem.querySelector("button.delete");
-
-  //Bind editTask to edit button.
-  editButton.onclick = editTask;
-  //Bind deleteTask to delete button.
-  deleteButton.onclick = deleteTask;
-  //Bind taskCompleted to checkBoxEventHandler.
+//function to bind events to task items
+const bindTaskItemEvents = (taskItem, checkBoxEventHandler) => {
+  console.log("Binding task item events...");
+  const checkBox = taskItem.querySelector("input[type=checkbox]");
+  const editBtn = taskItem.querySelector("button.edit");
+  const deleteBtn = taskItem.querySelector("button.delete");
+  editBtn.onclick = editExistingTask;
+  deleteBtn.onclick = removeTask;
   checkBox.onchange = checkBoxEventHandler;
 };
-
-//cycle over incompleteTaskHolder ul list items
-//for each list item
-for (var i = 0; i < incompleteTaskHolder.children.length; i++) {
-  //bind events to list items chldren(tasksCompleted)
-  bindTaskEvents(incompleteTaskHolder.children[i], taskCompleted);
+//initial binding for existing tasks
+for (let i = 0; i < todoListContainer.children.length; i++) {
+  bindTaskItemEvents(todoListContainer.children[i], markTaskAsCompleted);
 }
-
-//cycle over completedTasksHolder ul list items
-for (var i = 0; i < completedTasksHolder.children.length; i++) {
-  //bind events to list items chldren(tasksIncompleted)
-  bindTaskEvents(completedTasksHolder.children[i], taskIncomplete);
+for (let i = 0; i < completedListContainer.children.length; i++) {
+  bindTaskItemEvents(completedListContainer.children[i], markTaskAsIncomplete);
 }
-
-// Issues with usability don't get seen until they are in front of a human tester.
-
-//prevent creation of empty tasks.
-
-//Change edit to save when you are in edit mode.
