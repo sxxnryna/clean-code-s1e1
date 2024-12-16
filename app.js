@@ -41,52 +41,44 @@ const addNewTask = () => {
   newTaskInput.value = "";
 };
 
-//Edit an existing task.
-
-var editTask = function () {
-  console.log("Edit Task...");
-  console.log("Change 'edit' to 'save'");
-
-  var listItem = this.parentNode;
-
-  var editInput = listItem.querySelector("input[type=text]");
-  var label = listItem.querySelector("label");
-  var editBtn = listItem.querySelector(".edit");
-  var containsClass = listItem.classList.contains("editMode");
-  //If class of the parent is .editmode
-  if (containsClass) {
-    //switch to .editmode
-    //label becomes the inputs value.
-    label.innerText = editInput.value;
+//edit an existing task.
+const editExistingTask = function () {
+  console.log("Editing task...");
+  const listItem = this.parentNode;
+  const editField = listItem.querySelector("input[type=text]");
+  const taskLabel = listItem.querySelector("label");
+  const editBtn = listItem.querySelector(".edit");
+  const isEditMode = listItem.classList.contains("editMode");
+  if (isEditMode) {
+    taskLabel.innerText = editField.value;
     editBtn.innerText = "Edit";
   } else {
-    editInput.value = label.innerText;
+    editField.value = taskLabel.innerText;
     editBtn.innerText = "Save";
   }
-
-  //toggle .editmode on the parent.
   listItem.classList.toggle("editMode");
 };
 
 //Delete task.
-var deleteTask = function () {
-  console.log("Delete Task...");
-
-  var listItem = this.parentNode;
-  var ul = listItem.parentNode;
-  //Remove the parent list item from the ul.
-  ul.removeChild(listItem);
+const removeTask = function () {
+  console.log("Deleting task...");
+  const listItem = this.parentNode;
+  const parentUl = listItem.parentNode;
+  parentUl.removeChild(listItem);
 };
 
 //Mark task completed
-var taskCompleted = function () {
-  console.log("Complete Task...");
-
-  //Append the task list item to the #completed-tasks
-  var listItem = this.parentNode;
-  completedTasksHolder.appendChild(listItem);
-  bindTaskEvents(listItem, taskIncomplete);
+const markTaskAsCompleted = function () {
+  console.log("Marking task as completed...");
+  const listItem = this.parentNode;
+  completedListContainer.appendChild(listItem);
+  bindTaskItemEvents(listItem, markTaskAsIncomplete);
 };
+
+//Append the task list item to the #completed-tasks
+var listItem = this.parentNode;
+completedTasksHolder.appendChild(listItem);
+bindTaskEvents(listItem, taskIncomplete);
 
 var taskIncomplete = function () {
   console.log("Incomplete Task...");
